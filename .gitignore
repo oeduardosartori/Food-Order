@@ -1,0 +1,36 @@
+# Arquivos gerados pelo Maven
+target/
+.mvn/wrapper/maven-wrapper.jar
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+
+# Arquivos de build
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Sistema de build
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Arquivos temporários
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Arquivos sensíveis e de configuração externa
+.env
+*.env
+application-prod.properties
+application-dev.properties
+
+# Arquivo de ajuda do Spring Initializr
+HELP.md
