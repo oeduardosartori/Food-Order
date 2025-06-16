@@ -6,7 +6,13 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "client")
+@Table(
+        name = "client",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_client_email", columnNames = "email"),
+                @UniqueConstraint(name = "uk_client_cpf", columnNames = "cpf")
+        }
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,15 +23,15 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @Column(unique = true, nullable = false,length = 120)
+    @Column(name = "email", nullable = false, length = 120)
     private String email;
 
-    @Column(unique = true, nullable = false, length = 11)
+    @Column(name = "cpf", nullable = false, length = 11)
     private String cpf;
 
-    @Column(name = "birth_Date", nullable = false)
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 }

@@ -19,14 +19,14 @@ public class Order {
     private Long id;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_order_client"))
     private Client client;
 
-    @Column(nullable = false)
+    @Column(name = "date", nullable = false)
     private LocalDateTime date;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false,  length = 20)
+    @Column(name = "status", nullable = false,  length = 20)
     private OrderStatus status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
