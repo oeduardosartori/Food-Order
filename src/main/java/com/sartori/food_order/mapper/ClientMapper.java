@@ -10,6 +10,5 @@ import org.mapstruct.Mapping;
 public interface ClientMapper {
 
     Client toEntity(ClientInputDTO dto);
-    ClientInputDTO toDTO(Client entity);
     ClientOutputDTO toOutputDTO(Client entity);
 }
