@@ -1,11 +1,14 @@
-package com.sartori.food_order.service;
+package com.sartori.food_order.service.impl;
 
+import com.sartori.food_order.config.MessageResolver;
 import com.sartori.food_order.dto.client.ClientInputDTO;
 import com.sartori.food_order.dto.client.ClientOutputDTO;
 import com.sartori.food_order.entity.Client;
 import com.sartori.food_order.exception.BusinessException;
+import com.sartori.food_order.helper.ErrorMessage;
 import com.sartori.food_order.mapper.ClientMapper;
 import com.sartori.food_order.repository.ClientRepository;
+import com.sartori.food_order.service.ClientService;
 import com.sartori.food_order.validator.ClientValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,11 +18,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ClientServiceImpl implements ClientService{
+public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
     private final ClientMapper clientMapper;
     private final ClientValidator clientValidator;
+    private final MessageResolver messageResolver;
 
     @Override
     public ClientOutputDTO createClient(ClientInputDTO clientInputDTO) {
@@ -42,7 +46,9 @@ public class ClientServiceImpl implements ClientService{
     @Override
     public ClientOutputDTO getClientById(Long id) {
         Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new BusinessException("Client not found with ID: " + id));
+                .orElseThrow(() -> new BusinessException(
+                        messageResolver.getMessage(ErrorMessage.CLIENT_NOT_FOUND_BY_ID.code(), id)
+                ));
 
         return clientMapper.toOutputDTO(client);
     }
@@ -57,7 +63,9 @@ public class ClientServiceImpl implements ClientService{
     public ClientOutputDTO updateClient(Long id, ClientInputDTO clientInputDTO) {
         // Check if exists
         Client existingClient = clientRepository.findById(id)
-                .orElseThrow(() -> new BusinessException("Client not found with ID: " + id));
+                .orElseThrow(() -> new BusinessException(
+                        messageResolver.getMessage(ErrorMessage.CLIENT_NOT_FOUND_BY_ID.code(), id)
+                ));
 
         // Validate e-mail/CPF duplicity ignoring current client
         clientValidator.validateEmailAndCpfUniqueness(
