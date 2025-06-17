@@ -9,6 +9,8 @@ public enum ErrorMessage {
     // === PRODUCT MESSAGES ===
     PRODUCT_NOT_FOUND_BY_ID("product.notfound.id"),
     PRODUCT_NAME_DUPLICATE("product.name.duplicate"),
+    PRODUCT_PRICE_INVALID("product.price.positive"),
+    PRODUCT_PRICE_DECIMAL("product.price.decimal"),
 
     // === ORDER MESSAGES ===
     ORDER_NOT_FOUND_BY_ID("order.notfound.id"),

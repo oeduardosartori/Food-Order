@@ -1,6 +1,7 @@
 package com.sartori.food_order.mapper;
 
 import com.sartori.food_order.dto.orderitem.OrderItemInputDTO;
+import com.sartori.food_order.dto.orderitem.OrderItemOutputDTO;
 import com.sartori.food_order.entity.OrderItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,6 +13,6 @@ public interface OrderItemMapper {
     OrderItem toEntity(OrderItemInputDTO dto);
 
     @Mapping(source = "product.id", target = "productId")
-    OrderItemInputDTO toDTO(OrderItem entity);
+    OrderItemOutputDTO toOutputDTO(OrderItem entity);
 }
 

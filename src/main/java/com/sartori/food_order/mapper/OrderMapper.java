@@ -1,6 +1,7 @@
 package com.sartori.food_order.mapper;
 
 import com.sartori.food_order.dto.order.OrderInputDTO;
+import com.sartori.food_order.dto.order.OrderOutputDTO;
 import com.sartori.food_order.entity.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,5 +13,5 @@ public interface OrderMapper {
     Order toEntity(OrderInputDTO dto);
 
     @Mapping(source = "client.id", target = "clientId")
-    OrderInputDTO toDTO(Order entity);
+    OrderOutputDTO toOutputDTO(Order entity);
 }

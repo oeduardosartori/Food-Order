@@ -33,14 +33,10 @@ public class ClientServiceImpl implements ClientService {
                clientInputDTO.getCpf()
        );
 
-       // Convert DTO to entity
        Client client = clientMapper.toEntity(clientInputDTO);
+       Client savedClient = clientRepository.save(client);
 
-       // Save entity
-       client = clientRepository.save(client);
-
-       // Return response
-       return clientMapper.toOutputDTO(client);
+       return clientMapper.toOutputDTO(savedClient);
     }
 
     @Override
