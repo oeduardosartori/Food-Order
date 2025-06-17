@@ -1,7 +1,9 @@
 package com.sartori.food_order.validator;
 
+import com.sartori.food_order.config.MessageResolver;
 import com.sartori.food_order.entity.Client;
 import com.sartori.food_order.exception.BusinessException;
+import com.sartori.food_order.helper.ErrorMessage;
 import com.sartori.food_order.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class ClientValidator {
 
     private final ClientRepository clientRepository;
+    private final MessageResolver messageResolver;
 
     /**
      * Validates unique email and CPF, ignoring the ID provided (null for create).
@@ -36,11 +39,13 @@ public class ClientValidator {
 
     private String getDuplicateFieldMessage(Client clientFound, String email, String cpf) {
         if (clientFound.getEmail().equals(email)) {
-            return "Email already registered";
+            return messageResolver.getMessage(ErrorMessage.CLIENT_EMAIL_DUPLICATE.code());
         }
         if (clientFound.getCpf().equals(cpf)){
-            return "CPF already registered";
+            return messageResolver.getMessage(ErrorMessage.CLIENT_CPF_DUPLICATE.code());
         }
-        return "Duplicate Data";
+        throw new IllegalStateException(
+                messageResolver.getMessage(ErrorMessage.INCONSISTENT_VALIDATION.code())
+        );
     }
 }
