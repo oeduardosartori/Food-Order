@@ -1,4 +1,4 @@
-package com.sartori.food_order.validator.client.create;
+package com.sartori.food_order.validator.client.update;
 
 import com.sartori.food_order.config.MessageResolver;
 import com.sartori.food_order.dto.client.ClientInputDTO;
@@ -10,27 +10,29 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CpfEmailUniquenessCreateValidator implements ClientCreateValidationRule {
+public class CpfEmailUniquenessUpdateValidator implements ClientUpdateValidationRule {
 
     private final ClientRepository clientRepository;
     private final MessageResolver messageResolver;
 
     @Override
-    public void validate(ClientInputDTO dto) {
-        uniqueCpfCreateValidation(dto);
-        uniqueEmailCreateValidation(dto);
+    public void validate(ClientInputDTO dto, Long clientId) {
+        uniqueCpfUpdateValidation(dto, clientId);
+        uniqueEmailUpdateValidation(dto, clientId);
     }
 
-    private void uniqueCpfCreateValidation(ClientInputDTO dto) {
+    private void uniqueCpfUpdateValidation(ClientInputDTO dto, Long clientId) {
         clientRepository.findByCpf(dto.getCpf())
+                .filter(existing -> !existing.getId().equals(clientId))
                 .ifPresent(existing -> {
                     throw new BusinessException(messageResolver.getMessage(
                             ErrorMessage.CLIENT_CPF_DUPLICATE.code()));
                 });
     }
 
-    private void uniqueEmailCreateValidation(ClientInputDTO dto) {
+    private void uniqueEmailUpdateValidation(ClientInputDTO dto, Long clientId) {
         clientRepository.findByEmail(dto.getEmail())
+                .filter(existing -> !existing.getId().equals(clientId))
                 .ifPresent(existing -> {
                     throw new BusinessException(messageResolver.getMessage(
                             ErrorMessage.CLIENT_EMAIL_DUPLICATE.code()));

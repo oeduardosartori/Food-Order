@@ -14,15 +14,15 @@ import java.util.regex.Pattern;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class SanitizeValidationClientCreate implements ClientCreateValidationRule {
+public class SanitizeClientDataValidator {
 
     private final MessageResolver messageResolver;
+
     private static final Pattern NAME_PATTERN = Pattern.compile("^[A-Za-zÀ-ÖØ-öø-ÿ ]+$");
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$");
     private static final Pattern NUMERIC_PATTERN = Pattern.compile("\\D");
 
-    @Override
-    public void validate(ClientInputDTO dto) {
+    public void sanitize(ClientInputDTO dto) {
         sanitizeAndValidateName(dto);
         sanitizeAndValidateEmail(dto);
         sanitizeAndValidateCpf(dto);

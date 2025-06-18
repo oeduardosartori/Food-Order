@@ -9,7 +9,7 @@ import com.sartori.food_order.helper.ErrorMessage;
 import com.sartori.food_order.mapper.ProductMapper;
 import com.sartori.food_order.repository.ProductRepository;
 import com.sartori.food_order.service.ProductService;
-import com.sartori.food_order.validator.ProductValidator;
+import com.sartori.food_order.validator.product.ProductValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

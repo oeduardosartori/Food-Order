@@ -9,7 +9,7 @@ import com.sartori.food_order.helper.ErrorMessage;
 import com.sartori.food_order.mapper.ClientMapper;
 import com.sartori.food_order.repository.ClientRepository;
 import com.sartori.food_order.service.ClientService;
-import com.sartori.food_order.validator.ClientValidator;
+import com.sartori.food_order.validator.client.ClientValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,14 +26,10 @@ public class ClientServiceImpl implements ClientService {
     private final MessageResolver messageResolver;
 
     @Override
-    public ClientOutputDTO createClient(ClientInputDTO clientInputDTO) {
-       // Validates unique email and CPF
-       clientValidator.validateEmailAndCpfUniqueness(
-               clientInputDTO.getEmail(),
-               clientInputDTO.getCpf()
-       );
+    public ClientOutputDTO createClient(ClientInputDTO inputDTO) {
+       clientValidator.validateCreateClient(inputDTO);
 
-       Client client = clientMapper.toEntity(clientInputDTO);
+       Client client = clientMapper.toEntity(inputDTO);
        Client savedClient = clientRepository.save(client);
 
        return clientMapper.toOutputDTO(savedClient);
@@ -56,25 +52,18 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientOutputDTO updateClient(Long id, ClientInputDTO clientInputDTO) {
-        // Check if exists
+    public ClientOutputDTO updateClient(Long id, ClientInputDTO inputDTO) {
         Client existingClient = clientRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(
                         messageResolver.getMessage(ErrorMessage.CLIENT_NOT_FOUND_BY_ID.code(), id)
                 ));
 
-        // Validate e-mail/CPF duplicity ignoring current client
-        clientValidator.validateEmailAndCpfUniqueness(
-                clientInputDTO.getEmail(),
-                clientInputDTO.getCpf(),
-                id
-        );
+        clientValidator.validateUpdateClient(inputDTO, id);
 
-        // Update fields
-        existingClient.setName(clientInputDTO.getName());
-        existingClient.setEmail(clientInputDTO.getEmail());
-        existingClient.setCpf(clientInputDTO.getCpf());
-        existingClient.setBirthDate(clientInputDTO.getBirthDate());
+        existingClient.setName(inputDTO.getName());
+        existingClient.setEmail(inputDTO.getEmail());
+        existingClient.setCpf(inputDTO.getCpf());
+        existingClient.setBirthDate(inputDTO.getBirthDate());
 
         // Save changes
         Client updateClient = clientRepository.save(existingClient);

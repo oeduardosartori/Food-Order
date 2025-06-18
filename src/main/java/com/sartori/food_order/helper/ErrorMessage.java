@@ -3,8 +3,11 @@ package com.sartori.food_order.helper;
 public enum ErrorMessage {
     // === CLIENT MESSAGES ===
     CLIENT_NOT_FOUND_BY_ID("client.notfound.id"),
-    CLIENT_EMAIL_DUPLICATE("client.email.duplicate"),
+    CLIENT_NAME_INVALID("client.name.invalid"),
     CLIENT_CPF_DUPLICATE("client.cpf.duplicate"),
+    CLIENT_CPF_INVALID("client.cpf.invalid"),
+    CLIENT_EMAIL_INVALID("client.email.invalid"),
+    CLIENT_EMAIL_DUPLICATE("client.email.duplicate"),
 
     // === PRODUCT MESSAGES ===
     PRODUCT_NOT_FOUND_BY_ID("product.notfound.id"),
