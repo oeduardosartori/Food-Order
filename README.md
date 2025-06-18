@@ -1,6 +1,6 @@
 # 🛒 Food Order API
 
-[![CI](https://github.com/oeduardosartori/Food-Order/actions/workflows/ci.yml/badge.svg)](https://github.com/SEU_USUARIO/SEU_REPOSITORIO/actions)
+[![CI](https://github.com/oeduardosartori/Food-Order/actions/workflows/ci.yml/badge.svg)](https://github.com/oeduardosartori/Food-Order/actions)
 
 A RESTful API for managing orders, simulating the backend of a small e-commerce platform. The project was developed to apply best backend practices, including software architecture, testing, Git, and continuous integration.
 
