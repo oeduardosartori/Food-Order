@@ -1,0 +1,48 @@
+name: CI - Food Order API
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  checks: write
+
+jobs:
+  build-and-test:
+    name: Build & Test Java Project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+
+      - name: Java 17 setup
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          cache: maven
+
+      - name: Run build with test
+        run: mvn clean verify --batch-mode --fail-at-end
+
+      - name: Generate artifact (JAR)
+        if: success()
+        run: mvn package -DskipTests
+
+      - name: Upload the generated JAR (target/*.jar)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: food-order-api
+          path: target/*.jar
+
+      - name: Publish test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: target/surefire-reports
