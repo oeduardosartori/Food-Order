@@ -1,4 +1,4 @@
-package com.sartori.food_order.validator;
+package com.sartori.food_order.validator.product;
 
 import com.sartori.food_order.config.MessageResolver;
 import com.sartori.food_order.dto.product.ProductInputDTO;
