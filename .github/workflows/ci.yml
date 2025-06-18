@@ -15,6 +15,10 @@ jobs:
     name: Build & Test Java Project
     runs-on: ubuntu-latest
 
+    env:
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
     steps:
       - name: Code checkout
         uses: actions/checkout@v4
